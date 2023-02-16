@@ -7,12 +7,14 @@ import { RouterModule } from '@angular/router';
 import { appRoutes } from './app.routes';
 import { MatCardModule } from '@angular/material/card';
 import { UiSharedModule } from '@bg-hoard/store/ui-shared';
+import { HttpClientModule } from '@angular/common/http';
 
 @NgModule({
   declarations: [AppComponent, NxWelcomeComponent],
   imports: [
     BrowserModule,
     UiSharedModule,
+    HttpClientModule,
     RouterModule.forRoot(appRoutes, { initialNavigation: 'enabledBlocking' }),
     MatCardModule,
   ],
