@@ -2,14 +2,14 @@
   "name": "ui-shared",
   "$schema": "../node_modules/nx/schemas/project-schema.json",
   "projectType": "library",
-  "sourceRoot": "libs/ui-shared/src",
+  "sourceRoot": "libs/store/ui-shared/src",
   "prefix": "bg-hoard",
   "targets": {
     "test": {
       "executor": "@nrwl/jest:jest",
       "outputs": ["{workspaceRoot}/coverage/{projectRoot}"],
       "options": {
-        "jestConfig": "libs/ui-shared/jest.config.ts",
+        "jestConfig": "libs/store/ui-shared/jest.config.ts",
         "passWithNoTests": true
       },
       "configurations": {
@@ -24,11 +24,43 @@
       "outputs": ["{options.outputFile}"],
       "options": {
         "lintFilePatterns": [
-          "libs/ui-shared/**/*.ts",
-          "libs/ui-shared/**/*.html"
+          "libs/store/ui-shared/**/*.ts",
+          "libs/store/ui-shared/**/*.html"
         ]
+      }
+    },
+    "storybook": {
+      "executor": "@storybook/angular:start-storybook",
+      "options": {
+        "port": 4400,
+        "configDir": "libs/store/ui-shared/.storybook",
+        "browserTarget": "ui-shared:build-storybook",
+        "compodoc": false
+      },
+      "configurations": {
+        "ci": {
+          "quiet": true
+        }
+      }
+    },
+    "build-storybook": {
+      "executor": "@storybook/angular:build-storybook",
+      "outputs": ["{options.outputDir}"],
+      "options": {
+        "outputDir": "dist/storybook/ui-shared",
+        "configDir": "libs/store/ui-shared/.storybook",
+        "browserTarget": "ui-shared:build-storybook",
+        "compodoc": false,
+        "styles": [
+          "./node_modules/@angular/material/prebuilt-themes/deeppurple-amber.css"
+        ]
+      },
+      "configurations": {
+        "ci": {
+          "quiet": true
+        }
       }
     }
   },
-  "tags": []
+  "tags": ["scope:store", "type:ui"]
 }

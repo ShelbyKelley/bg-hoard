@@ -2,7 +2,7 @@
   "extends": "./tsconfig.json",
   "compilerOptions": {
     "experimentalDecorators": true,
-    "outDir": "../../dist/out-tsc",
+    "outDir": "../../../dist/out-tsc",
     "declaration": true,
     "declarationMap": true,
     "types": [],
@@ -12,7 +12,9 @@
     "src/test-setup.ts",
     "src/**/*.spec.ts",
     "jest.config.ts",
-    "src/**/*.test.ts"
+    "src/**/*.test.ts",
+    "**/*.stories.ts",
+    "**/*.stories.js"
   ],
   "include": ["src/**/*.ts"]
 }
