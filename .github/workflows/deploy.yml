@@ -1,0 +1,24 @@
+name: Deploy Website
+
+on:
+  push:
+    branches:
+      - main
+
+env:
+  SURGE_DOMAIN: ${{ secrets.SURGE_DOMAIN }}
+  SURGE_TOKEN: ${{ secrets.SURGE_TOKEN }}
+  HEROKU_API_KEY: ${{ secrets.HEROKU_API_KEY }}
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    name: Deploying apps
+    steps:
+      - uses: actions/checkout@v3
+        with:
+          fetch-depth: 0
+      - uses: bahmutov/npm-install@v1
+      - uses: nrwl/nx-set-shas@v2
+      - run: npx nx affected --target=build --base=${{ env.NX_BASE }} --parallel --configuration=production
+      - run: npx nx affected --target=deploy --base=${{ env.NX_BASE }} --parallel

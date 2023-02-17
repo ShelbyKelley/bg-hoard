@@ -1,12 +1,11 @@
 {
   "extends": "./tsconfig.json",
   "compilerOptions": {
-    "experimentalDecorators": true,
     "outDir": "../../../dist/out-tsc",
     "declaration": true,
     "declarationMap": true,
-    "types": [],
-    "inlineSources": true
+    "inlineSources": true,
+    "types": []
   },
   "exclude": [
     "src/test-setup.ts",

@@ -6,6 +6,6 @@ import { MatToolbarModule } from '@angular/material/toolbar';
 @NgModule({
   imports: [CommonModule, MatToolbarModule],
   declarations: [HeaderComponent],
-  exports: [HeaderComponent]
+  exports: [HeaderComponent],
 })
-export class UiSharedModule {}
+export class StoreUiSharedModule {}

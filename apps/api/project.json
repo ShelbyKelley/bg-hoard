@@ -58,5 +58,6 @@
       }
     }
   },
-  "tags": ["scope:api", "type:app"]
+  "tags": ["scope:api", "type:app"],
+  "implicitDependencies": []
 }

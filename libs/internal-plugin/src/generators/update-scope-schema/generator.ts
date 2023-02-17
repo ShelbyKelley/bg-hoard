@@ -1,10 +1,31 @@
 import {
-  formatFiles,
-  getProjects,
-  ProjectConfiguration,
   Tree,
+  updateJson,
+  formatFiles,
+  ProjectConfiguration,
+  getProjects,
+  updateProjectConfiguration,
 } from '@nrwl/devkit';
-import { updateJson } from '@nrwl/devkit';
+
+export default async function (tree: Tree) {
+  addScopeIfMissing(tree);
+  const scopes = getScopes(getProjects(tree));
+  updateSchemaJson(tree, scopes);
+  updateSchemaInterface(tree, scopes);
+  await formatFiles(tree);
+}
+
+function addScopeIfMissing(tree: Tree) {
+  const projectMap = getProjects(tree);
+  Array.from(projectMap.keys()).forEach((projectName) => {
+    const project = projectMap.get(projectName);
+    if (!project.tags.some((tag) => tag.startsWith('scope:'))) {
+      const scope = projectName.split('-')[0];
+      project.tags.push(`scope:${scope}`);
+      updateProjectConfiguration(tree, projectName, project);
+    }
+  });
+}
 
 function getScopes(projectMap: Map<string, ProjectConfiguration>) {
   const projects: any[] = Array.from(projectMap.values());
@@ -42,11 +63,4 @@ function updateSchemaInterface(tree: Tree, scopes: string[]) {
   directory: ${joinScopes};
 }`;
   tree.write(interfaceDefinitionFilePath, newContent);
-}
-
-export default async function (tree: Tree) {
-  const scopes = getScopes(getProjects(tree));
-  updateSchemaJson(tree, scopes);
-  updateSchemaInterface(tree, scopes);
-  await formatFiles(tree);
 }
